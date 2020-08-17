@@ -37,7 +37,7 @@ import java.util.Map;
 public class LongestSubstringWithoutRepeatingCharacters {
     public static void main(String[] args) {
         Solution solution = new LongestSubstringWithoutRepeatingCharacters().new Solution();
-        System.out.println(solution.lengthOfLongestSubstring("tmmzuxt"));
+        System.out.println(solution.lengthOfLongestSubstring("pwwkew"));
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
@@ -53,16 +53,15 @@ public class LongestSubstringWithoutRepeatingCharacters {
             for (int i = 0; i < charArray.length; i++) {
                 char target = charArray[i];
                 if (charBucket.containsKey(target)) {
-                    maxBucketSize = Math.max(i - startIndex, maxBucketSize);
-                    startIndex = charBucket.get(target) + 1;
+                    int duplicateIndex = charBucket.get(target);
+                    if (duplicateIndex >= startIndex) {
+                        maxBucketSize = Math.max(i - startIndex, maxBucketSize);
+                        startIndex = duplicateIndex + 1;
+                    }
                 }
                 charBucket.put(target, i);
-
-                if (i == charArray.length - 1) {
-                    maxBucketSize = Math.max(i - startIndex+1, maxBucketSize);
-                }
             }
-            return maxBucketSize;
+            return Math.max(charArray.length - startIndex, maxBucketSize);
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
