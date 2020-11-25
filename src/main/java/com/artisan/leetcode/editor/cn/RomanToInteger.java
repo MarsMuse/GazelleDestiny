@@ -68,23 +68,57 @@ package com.artisan.leetcode.editor.cn;
 // 👍 1126 👎 0
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * [13]罗马数字转整数
  *
  * @author xzman
  * @since 2020-11-25 08:01:41
  */
-public class RomanToInteger{
+public class RomanToInteger {
     public static void main(String[] args) {
         Solution solution = new RomanToInteger().new Solution();
         // TO TEST
+        System.out.println(solution.romanToInt("IX"));
     }
+
     //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int romanToInt(String s) {
-        return 0;
+    class Solution {
+        private final Map<Character, Integer> symbolValue = new HashMap<>();
+
+        {
+            // 值映射 用于累计
+            symbolValue.put('I', 1);
+            symbolValue.put('V', 5);
+            symbolValue.put('X', 10);
+            symbolValue.put('L', 50);
+            symbolValue.put('C', 100);
+            symbolValue.put('D', 500);
+            symbolValue.put('M', 1000);
+        }
+
+        public int romanToInt(String s) {
+            if (null == s || 0 == s.length()) {
+                return 0;
+            }
+            char[] dataArray = s.toCharArray();
+            int index = dataArray.length - 1;
+            int result = 0;
+            while (index >= 0) {
+                Integer current = symbolValue.get(dataArray[index]);
+                result += current;
+                if (index > 0 && symbolValue.get(dataArray[index - 1]).compareTo(current) < 0) {
+                    result -= symbolValue.get(dataArray[index - 1]);
+                    index -= 2;
+                } else {
+                    index--;
+                }
+            }
+            return result;
+        }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
