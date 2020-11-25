@@ -61,6 +61,9 @@ package com.artisan.leetcode.editor.cn;
 // Related Topics 数学 字符串 
 // 👍 904 👎 0
 
+import com.sun.org.apache.bcel.internal.generic.BREAKPOINT;
+import com.sun.org.apache.regexp.internal.RE;
+
 import java.util.*;
 
 /**
@@ -72,7 +75,7 @@ import java.util.*;
 public class StringToIntegerAtoi{
     public static void main(String[] args) {
         Solution solution = new StringToIntegerAtoi().new Solution();
-        System.out.println(solution.myAtoi("  4193 with words"));
+        System.out.println(solution.myAtoi("  ++1"));
     }
 
 //leetcode submit region begin(Prohibit modification and deletion)
@@ -80,7 +83,7 @@ class Solution {
     final Character negativeChar = '-';
     final Character positiveChar = '+';
     final Character zeroChar = '0';
-    final Set<Character> invalidCharSet = new HashSet<>(Arrays.asList('+','-','1','2','3','4','5','6','7','8','9'));
+    final Set<Character> invalidCharSet = new HashSet<>(Arrays.asList('+','-','1','2','3','4','5','6','7','8','9','0'));
 
     public int myAtoi(String s) {
         if(null == s || 0 == s.trim().length()){
@@ -92,27 +95,20 @@ class Solution {
             return 0;
         }
         List<Integer> dataArray = new ArrayList<>(charArray.length);
+        List<Character> symbolArray = new ArrayList<>(charArray.length);
         boolean isNegative = false;
-        boolean isPositive = false;
         for(Character data : charArray){
             if(!invalidCharSet.contains(data)){
                 break;
             }
-            if(positiveChar.equals(data)){
+            if(negativeChar.equals(data) || positiveChar.equals(data)){
                 if(!dataArray.isEmpty()){
                     break;
                 }
-                isPositive = true;
-                continue;
-            }
-            if(negativeChar.equals(data)){
-                if(!dataArray.isEmpty()){
+                symbolArray.add(data);
+                if(symbolArray.size() > 1){
                     break;
                 }
-                isNegative = true;
-                continue;
-            }
-            if(zeroChar.equals(data) && dataArray.isEmpty()){
                 continue;
             }
             dataArray.add(data - zeroChar);
@@ -120,25 +116,32 @@ class Solution {
         if(dataArray.isEmpty()){
             return 0;
         }
-        if(isNegative && isPositive){
-            return 0;
-        }
-        int result = 0;
-        for(int i = 1 ;i<=dataArray.size();i++){
-            result += dataArray.get(i-1)*pow(10, dataArray.size() -i);
-        }
-        if(!dataArray.get(0).equals(result / pow(10, dataArray.size() - 1))){
-            if(isNegative){
-                return Integer.MIN_VALUE;
-            } else{
-                return Integer.MAX_VALUE;
+        isNegative = !symbolArray.isEmpty() && negativeChar.equals(symbolArray.get(0));
+        int prevValue = 0;
+        boolean overflow = false;
+        for(Integer currentValue : dataArray){
+            if(overflow = checkOverflow(prevValue, currentValue, isNegative)){
+                break;
             }
+            prevValue = prevValue * 10 + currentValue;
+        }
+        if (overflow){
+            return isNegative ? Integer.MIN_VALUE : Integer.MAX_VALUE;
         }
         if(isNegative){
-            return -1 * result;
+            return -1 * prevValue;
         }
+        return prevValue;
+    }
 
-        return result;
+    private boolean checkOverflow(int prevValue,int currentValue, boolean isNegative){
+        if(isNegative){
+            return -1 * prevValue < Integer.MIN_VALUE/10 ||
+                    (-1 * prevValue == Integer.MIN_VALUE/10 && -1* currentValue < -8);
+        }else{
+            return prevValue > Integer.MAX_VALUE/10 ||
+                    (prevValue == Integer.MAX_VALUE/10 && currentValue > 7);
+        }
     }
 
     private int pow(int source, int index) {
