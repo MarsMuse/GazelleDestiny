@@ -1,6 +1,8 @@
 package com.artisan.util;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 import java.util.StringJoiner;
 
 /**
@@ -93,7 +95,11 @@ public class ArrayUtils {
     }
 
     public static void main(String[] args) {
-        int[] data = new int[]{0,1,3,5,11,14};
-        System.out.println(binarySearch(data, 13));
+        Set<Long> a = new HashSet<>();
+        a.add(1L);
+        Set<Long> b = new HashSet<>();
+        b.add(1L);
+        b.add(2L);
+        System.out.println(b.retainAll(a));
     }
 }

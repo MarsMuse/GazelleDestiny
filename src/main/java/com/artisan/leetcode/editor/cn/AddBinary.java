@@ -29,28 +29,83 @@ package com.artisan.leetcode.editor.cn;
 // 👍 522 👎 0
 
 
+import java.util.Random;
+
 /**
  * [67]二进制求和
  *
  * @author xzman
  * @since 2020-11-25 22:29:14
  */
-public class AddBinary{
+public class AddBinary {
     public static void main(String[] args) {
         Solution solution = new AddBinary().new Solution();
         // TO TEST
-    }
-    //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public String addBinary(String a, String b) {
-        int length = Math.max(a.length(), b.length());
-        int carry = 0;
-        while (--length >= 0){
+        String a = getBinaryStr(2);
+        String b = getBinaryStr(5);
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(solution.addBinary(a, b));
 
-        }
-        return "";
+
     }
-}
+
+    static String getBinaryStr(int length) {
+        Random r = new Random();
+        StringBuilder builder = new StringBuilder("1");
+        while (--length > 0) {
+            builder.append(r.nextInt(2));
+        }
+        return builder.toString();
+    }
+
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        public String addBinary(String a, String b) {
+
+            char zeroChar = '0';
+            char oneChar = '1';
+            int aLength = a.length();
+            int bLength = b.length();
+            int length = Math.max(a.length(), b.length());
+            char[] result = new char[length];
+            int carry = 0;
+            while (--length >= 0) {
+                aLength--;
+                bLength--;
+                // 累加
+                if (aLength >= 0 && oneChar == a.charAt(aLength)) {
+                    carry++;
+                }
+                if (bLength >= 0 && oneChar == b.charAt(bLength)) {
+                    carry++;
+                }
+                // 赋值
+                switch (carry) {
+                    case 3:
+                        carry = 1;
+                        result[length] = oneChar;
+                        break;
+                    case 2:
+                        carry = 1;
+                        result[length] = zeroChar;
+                        break;
+                    case 1:
+                        carry = 0;
+                        result[length] = oneChar;
+                        break;
+                    default:
+                        carry = 0;
+                        result[length] = zeroChar;
+                        break;
+                }
+            }
+            if (1 == carry) {
+                return 1 + new String(result);
+            }
+            return new String(result);
+        }
+    }
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
