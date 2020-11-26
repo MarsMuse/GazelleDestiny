@@ -43,11 +43,11 @@ public class SearchInsertPosition {
     public static void main(String[] args) {
         Solution solution = new SearchInsertPosition().new Solution();
         int[] data = getSortAscArray(20, 30, 10);
-        data = new int[]{1,3};
+        data = new int[]{1,3,5,6};
         printArray(data);
-        Random r1 =new Random();
+        Random r1 = new Random();
         int key = r1.nextInt(100);
-        key = 0;
+        key = 7;
         System.out.println(key);
         System.out.println(solution.searchInsert(data, key));
     }
@@ -60,8 +60,9 @@ public class SearchInsertPosition {
             }
             int front = 0;
             int end = nums.length - 1;
-            while (end > front) {
-                int midIndex = (front + end) >>> 1;
+            int midIndex = 0;
+            while (front <= end) {
+                midIndex = (front + end) >>> 1;
                 if (target == nums[midIndex]) {
                     return midIndex;
                 }
@@ -72,7 +73,7 @@ public class SearchInsertPosition {
                 }
             }
 
-            return target > nums[end] ? end + 1 : end;
+            return target > nums[midIndex] ? midIndex + 1 : midIndex;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
