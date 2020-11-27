@@ -101,5 +101,8 @@ public class ArrayUtils {
         b.add(1L);
         b.add(2L);
         System.out.println(b.retainAll(a));
+        char m = 'b' -32;
+        System.out.println(m+1);
+        System.out.println('0'+1);
     }
 }
