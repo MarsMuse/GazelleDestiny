@@ -30,19 +30,69 @@ package com.artisan.leetcode.editor.cn;
  *
  * @author xzman
  * @since 2020-11-26 11:54:48
- */ 
-public class ClimbingStairs{
+ */
+public class ClimbingStairs {
     public static void main(String[] args) {
         Solution solution = new ClimbingStairs().new Solution();
-        
+        int n = 40;
+        while (n > 0) {
+            System.out.printf("-->more 台阶数量：%d，走法：%d\n", n, solution.climbStairs(n));
+            System.out.printf("-->less 台阶数量：%d，走法：%d\n", n, solution.less25StepClimbStairs(n));
+            n--;
+        }
     }
 
-//leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int climbStairs(int n) {
-        return 0;
+    //leetcode submit region begin(Prohibit modification and deletion)
+    class Solution {
+        public int climbStairs(int n) {
+            if (0 == n || 1 == n || 2 == n) {
+                return n;
+            }
+
+            int prev = 1;
+            int current = 2;
+            while (n-- > 2) {
+                prev += current;
+                current ^= prev;
+                prev ^= current;
+                current ^= prev;
+            }
+            return current;
+        }
+
+        public int less25StepClimbStairs(int n) {
+            if (0 == n || 1 == n) {
+                return n;
+            }
+            int num = 0;
+            int k = 0;
+            while (n >= k) {
+                num += combination(n, k);
+                k++;
+                n--;
+            }
+            return num;
+        }
+
+        private int combination(int n, int k) {
+            if (0 == k || k == n) {
+                return 1;
+            }
+            return (int) (factorial(n) / factorial(n - k) / factorial(k));
+        }
+
+        private double factorial(int n) {
+            if (0 == n) {
+                return 1;
+            }
+            double x = 1;
+            while (n > 0) {
+                x *= n;
+                n--;
+            }
+            return x;
+        }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
