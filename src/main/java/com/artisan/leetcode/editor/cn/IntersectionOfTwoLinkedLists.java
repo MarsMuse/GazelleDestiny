@@ -59,6 +59,9 @@ package com.artisan.leetcode.editor.cn;
 // Related Topics 链表 
 // 👍 895 👎 0
 
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * [160]相交链表
  *
@@ -66,9 +69,37 @@ package com.artisan.leetcode.editor.cn;
  * @since 2020-11-30 17:46:11
  */
 public class IntersectionOfTwoLinkedLists {
-    public static void main(String[] args) {
-        Solution solution = new IntersectionOfTwoLinkedLists().new Solution();
+    public final Random tr;
 
+    public IntersectionOfTwoLinkedLists() {
+        tr = ThreadLocalRandom.current();
+    }
+
+    public static void main(String[] args) {
+        IntersectionOfTwoLinkedLists im = new IntersectionOfTwoLinkedLists();
+        Solution solution = im.new Solution();
+        ListNode append = im.generateLink(1,null);
+        System.out.println(append);
+        ListNode linkA = im.generateLink(1, append);
+        System.out.println(linkA);
+        ListNode linkB = im.generateLink(1, append);
+        System.out.println(linkB);
+        System.out.println(solution.getIntersectionNode(linkA, linkB));
+        System.out.println(linkA);
+        System.out.println(linkB);
+    }
+
+    ListNode generateLink(int length, ListNode append) {
+        ListNode head = new ListNode(tr.nextInt(20 + length));
+        ListNode current = head;
+        while (--length > 0) {
+            current.next = new ListNode(tr.nextInt(20 + length));
+            current = current.next;
+        }
+        if (null != append) {
+            current.next = append;
+        }
+        return head;
     }
 
 //leetcode submit region begin(Prohibit modification and deletion)
@@ -86,6 +117,63 @@ public class IntersectionOfTwoLinkedLists {
      */
     public class Solution {
         public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+            if (null == headA || null == headB) {
+                return null;
+            }
+            if (headA == headB) {
+                return headA;
+            }
+            ListNode tryA = headA;
+            ListNode tryB = headB;
+            boolean exist = false;
+            int gapLength = 0;
+            ListNode moreLink = null;
+            ListNode lessLink = null;
+            // 都到了最后一个节点跳出循环
+            while (true) {
+                if (tryA == tryB) {
+                    // 链长度不同，只有在最后一个节点确认是否相交，此时得出链长差距
+                    if (gapLength == 0) {
+                        return tryA;
+                    } else {
+                        // 链长度一致，遇到的第一个相同点即为相交节点
+                        exist = true;
+                        break;
+                    }
+                }
+                if (null == tryA.next && null == tryB.next) {
+                    break;
+                }
+                if (null != tryA.next) {
+                    tryA = tryA.next;
+                } else if (null == moreLink) {
+                    moreLink = headB;
+                    lessLink = headA;
+                }
+
+                if (null != tryB.next) {
+                    tryB = tryB.next;
+                } else if (null == moreLink) {
+                    moreLink = headA;
+                    lessLink = headB;
+                }
+
+                if (null != moreLink) {
+                    gapLength++;
+                }
+            }
+            if (exist) {
+                while (--gapLength >= 0) {
+                    moreLink = moreLink.next;
+                }
+                while (null != moreLink && null != lessLink) {
+                    if (moreLink == lessLink) {
+                        return moreLink;
+                    }
+                    moreLink = moreLink.next;
+                    lessLink = lessLink.next;
+                }
+            }
             return null;
         }
     }
@@ -95,9 +183,16 @@ public class IntersectionOfTwoLinkedLists {
         int val;
         ListNode next;
 
+        @Override
+        public String toString() {
+            return null == next ? String.valueOf(val) : String.valueOf(val) + "->" + next.toString();
+        }
+
         ListNode(int x) {
             val = x;
             next = null;
+
+
         }
     }
 }
