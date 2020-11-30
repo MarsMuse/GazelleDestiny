@@ -18,6 +18,9 @@ package com.artisan.leetcode.editor.cn;
 // Related Topics 位运算 哈希表 
 // 👍 1595 👎 0
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * [136]只出现一次的数字
  *
@@ -27,12 +30,51 @@ package com.artisan.leetcode.editor.cn;
 public class SingleNumber {
     public static void main(String[] args) {
         Solution solution = new SingleNumber().new Solution();
-
+        System.out.println(solution.singleNumber(new int[]{-1, -1, -2}));
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int singleNumber(int[] nums) {
+            if (1 == nums.length) {
+                return nums[0];
+            }
+            Set<Integer> numberSet = new HashSet<>(nums.length / 2 + 1);
+            int front = 0;
+            int end = nums.length - 1;
+
+            while (front <= end) {
+                if (front == end) {
+                    if (numberSet.contains(nums[front])) {
+                        numberSet.remove(nums[front]);
+                    } else {
+                        numberSet.add(nums[front]);
+                    }
+                    break;
+                }
+
+                if (nums[front] == nums[end]) {
+                    front++;
+                    end--;
+                    continue;
+                }
+
+                if (numberSet.contains(nums[front])) {
+                    numberSet.remove(nums[front]);
+                } else {
+                    numberSet.add(nums[front]);
+                }
+                if (numberSet.contains(nums[end])) {
+                    numberSet.remove(nums[end]);
+                } else {
+                    numberSet.add(nums[end]);
+                }
+                front++;
+                end--;
+            }
+            for (int info : numberSet) {
+                return info;
+            }
             return 0;
         }
     }
