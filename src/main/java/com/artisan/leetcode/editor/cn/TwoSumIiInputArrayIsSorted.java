@@ -20,23 +20,47 @@ package com.artisan.leetcode.editor.cn;
 // 👍 435 👎 0
 
 
+import static com.artisan.util.ArrayUtils.*;
+
 /**
  * [167]两数之和 II - 输入有序数组
  *
  * @author xzman
  * @since 2020-11-30 23:11:24
  */
-public class TwoSumIiInputArrayIsSorted{
+public class TwoSumIiInputArrayIsSorted {
     public static void main(String[] args) {
         Solution solution = new TwoSumIiInputArrayIsSorted().new Solution();
+        int[] data = getSortAscArray(10, 20, -3);
+        printArray(data);
         // TO TEST
+        printArray(solution.twoSum(data, 19));
     }
+
     //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int[] twoSum(int[] numbers, int target) {
-        return null;
+    class Solution {
+        public int[] twoSum(int[] numbers, int target) {
+            int front = 0;
+            int end = numbers.length - 1;
+            while (front < end) {
+                int gap = target - numbers[front];
+                int frontBin = front + 1;
+                while (frontBin <= end) {
+                    int mid = (frontBin + end) / 2;
+                    if (gap == numbers[mid]) {
+                        return new int[]{front + 1, mid + 1};
+                    }
+                    if (gap > numbers[mid]) {
+                        frontBin = mid + 1;
+                    } else {
+                        end = mid - 1;
+                    }
+                }
+                front++;
+            }
+            return null;
+        }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
