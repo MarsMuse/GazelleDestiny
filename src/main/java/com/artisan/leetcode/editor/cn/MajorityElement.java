@@ -18,6 +18,9 @@ package com.artisan.leetcode.editor.cn;
 // Related Topics 位运算 数组 分治算法 
 // 👍 808 👎 0
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * [169]多数元素
  *
@@ -27,12 +30,27 @@ package com.artisan.leetcode.editor.cn;
 public class MajorityElement {
     public static void main(String[] args) {
         Solution solution = new MajorityElement().new Solution();
-
+        System.out.println(solution.majorityElement(new int[]{3, 2, 3}));
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int majorityElement(int[] nums) {
+            if (1 == nums.length) {
+                return nums[0];
+            }
+            Map<Integer, Integer> numberMap = new HashMap<>(nums.length / 2);
+            for (Integer number : nums) {
+                if (!numberMap.containsKey(number)) {
+                    numberMap.put(number, 1);
+                    continue;
+                }
+                int count = numberMap.get(number);
+                if (++count > nums.length / 2) {
+                    return number;
+                }
+                numberMap.put(number, count);
+            }
             return 0;
         }
     }
