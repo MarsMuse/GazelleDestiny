@@ -35,7 +35,7 @@ package com.artisan.leetcode.editor.cn;
 // 👍 695 👎 0
 
 
-import static com.artisan.util.ArrayUtils.*;
+import static com.artisan.leetcode.util.ArrayUtils.*;
 
 /**
  * [88]合并两个有序数组

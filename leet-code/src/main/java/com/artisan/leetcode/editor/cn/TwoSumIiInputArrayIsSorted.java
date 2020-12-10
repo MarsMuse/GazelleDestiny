@@ -20,7 +20,7 @@ package com.artisan.leetcode.editor.cn;
 // 👍 435 👎 0
 
 
-import static com.artisan.util.ArrayUtils.*;
+import static com.artisan.leetcode.util.ArrayUtils.*;
 
 /**
  * [167]两数之和 II - 输入有序数组

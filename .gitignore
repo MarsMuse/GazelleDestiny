@@ -1,5 +1,5 @@
-/src/main/java/com/artisan/leetcode/editor/cn/translation.json
-/src/main/java/com/artisan/leetcode/editor/cn/all.json
-/GazelleDestiny.iml
+/leet-code/src/main/java/com/artisan/leetcode/editor/cn/translation.json
+/leet-code/src/main/java/com/artisan/leetcode/editor/cn/all.json
 /.idea/
 /target/
+*.iml

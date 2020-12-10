@@ -45,7 +45,7 @@ package com.artisan.leetcode.editor.cn;
 // 👍 1727 👎 0
 
 import java.util.Random;
-import static com.artisan.util.ArrayUtils.*;
+import static com.artisan.leetcode.util.ArrayUtils.*;
 
 /**
  * [26]删除排序数组中的重复项

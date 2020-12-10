@@ -43,7 +43,7 @@ package com.artisan.leetcode.editor.cn;
 // 👍 584 👎 0
 
 
-import static com.artisan.util.ArrayUtils.*;
+import static com.artisan.leetcode.util.ArrayUtils.*;
 
 /**
  * [66]加一

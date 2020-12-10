@@ -1,4 +1,4 @@
-package com.artisan.util;
+package com.artisan.leetcode.util;
 
 /**
  * 斐波那契数列

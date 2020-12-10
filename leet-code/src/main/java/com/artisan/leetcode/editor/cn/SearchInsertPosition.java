@@ -31,7 +31,7 @@ package com.artisan.leetcode.editor.cn;
 
 import java.util.Random;
 
-import static com.artisan.util.ArrayUtils.*;
+import static com.artisan.leetcode.util.ArrayUtils.*;
 
 /**
  * [35]搜索插入位置

@@ -49,7 +49,7 @@ package com.artisan.leetcode.editor.cn;
 // Related Topics 数组 双指针 
 // 👍 717 👎 0
 
-import static com.artisan.util.ArrayUtils.*;
+import static com.artisan.leetcode.util.ArrayUtils.*;
 
 /**
  * [27]移除元素

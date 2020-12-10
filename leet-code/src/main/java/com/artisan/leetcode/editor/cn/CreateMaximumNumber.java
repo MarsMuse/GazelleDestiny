@@ -37,7 +37,7 @@ package com.artisan.leetcode.editor.cn;
 // 👍 288 👎 0
 
 
-import static com.artisan.util.ArrayUtils.*;
+import static com.artisan.leetcode.util.ArrayUtils.*;
 
 /**
  * [321]拼接最大数
