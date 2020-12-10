@@ -40,28 +40,101 @@ package com.artisan.leetcode.editor.cn;
 // 👍 774 👎 0
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 /**
  * [62]不同路径
  *
  * @author xzman
  * @since 2020-12-09 06:37:54
  */
-public class UniquePaths{
+public class UniquePaths {
     public static void main(String[] args) {
         Solution solution = new UniquePaths().new Solution();
-        System.out.println(solution.uniquePaths(100,100));
+        Random r = new Random();
+        for (int i = 1; i < 200; i++) {
+            int m = r.nextInt(20) + 2;
+            int n = r.nextInt(20) + 1;
+            long start = System.currentTimeMillis();
+            System.out.printf("第%d次，m为：%d，n为：%d，结果为%d\n", i, m, n, solution.uniquePaths(m, n));
+            System.out.printf("耗时%d\n", System.currentTimeMillis() - start);
+        }
         // TO TEST
     }
+
     //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
-    public int uniquePaths(int m, int n) {
-        if(1 == m || 1 == n){
-            return 1;
-        } else{
-            return uniquePaths(m-1,n) + uniquePaths(m, n-1);
+    class Solution {
+        private final List<Integer> pathStorage = new ArrayList<>();
+
+        public int uniquePathsRecursion(int m, int n) {
+            if (1 == m || 1 == n) {
+                return 1;
+            } else {
+                return uniquePathsRecursion(m - 1, n) + uniquePathsRecursion(m, n - 1);
+            }
+        }
+
+        public int uniquePaths(int m, int n) {
+            if (1 == m || 1 == n) {
+                return 1;
+            }
+            if (m < n) {
+                m ^= n;
+                n ^= m;
+                m ^= n;
+            }
+            if (pathStorage.size() < getPathStorageCapacity(m, n)) {
+                preInitPath(pathStorage.size(), getPathStorageCapacity(m, n));
+            }
+            return pathStorage.get(getPathStorageCapacity(m, n) - 1);
+        }
+
+        private void preInitPath(int startIndex, int capacity) {
+            for (int index = startIndex; index < capacity; index++) {
+                int currentM = getMByIndex(index);
+                int currentN = getNByIndexAndM(currentM, index);
+                if (1 == currentN) {
+                    pathStorage.add(1);
+                    continue;
+                }
+
+                if (2 == currentN) {
+                    pathStorage.add(currentM);
+                    continue;
+                }
+
+                if (currentM == currentN) {
+                    pathStorage.add(2 * pathStorage.get(index - 1));
+                    continue;
+                }
+                pathStorage.add(pathStorage.get(getPathStorageCapacity(currentM - 1, currentN) - 1) + pathStorage.get(index - 1));
+            }
+        }
+
+        private int getMByIndex(int index) {
+            int start = 2;
+            while (true) {
+                if ((index + 1) <= (start * (start + 1) / 2 - 1)) {
+                    return start;
+                }
+                start++;
+            }
+        }
+
+        private int getNByIndexAndM(int m, int index) {
+            if (2 == m) {
+                return index + 1;
+            }
+            return index - m * (m - 1) / 2 + 2;
+        }
+
+
+        private int getPathStorageCapacity(int m, int n) {
+            return m * (m - 1) / 2 + n - 1;
         }
     }
-}
 //leetcode submit region end(Prohibit modification and deletion)
 
 }
