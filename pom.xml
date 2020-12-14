@@ -11,6 +11,8 @@
     <modules>
         <module>web-app</module>
         <module>leet-code</module>
+        <module>scheduler-core</module>
+        <module>common-core</module>
     </modules>
 
     <properties>
@@ -22,9 +24,12 @@
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <lombok.version>1.18.12</lombok.version>
     </properties>
 
     <dependencyManagement>
+
+        <!--  spring start -->
         <dependencies>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -40,7 +45,19 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--  spring end -->
+
+
+            <!--  util start -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <!--  util end -->
         </dependencies>
+
+
 
     </dependencyManagement>
 
