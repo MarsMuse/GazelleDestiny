@@ -18,6 +18,10 @@
     <properties>
         <spring-boot.version>2.1.16.RELEASE</spring-boot.version>
         <spring-cloud.version>Greenwich.SR6</spring-cloud.version>
+        <mybatis-spring-boot.version>2.1.1</mybatis-spring-boot.version>
+        <mybatis-spring-boot-test.version>2.1.1</mybatis-spring-boot-test.version>
+        <druid-spring-boot.version>1.1.22</druid-spring-boot.version>
+        <mysql-connection-version>5.1.47</mysql-connection-version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -59,6 +63,29 @@
             </dependency>
             <!--  spring end -->
 
+            <!-- mybatis druid : START -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter-test</artifactId>
+                <version>${mybatis-spring-boot-test.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid-spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connection-version}</version>
+            </dependency>
+            <!-- mybatis druid : END -->
 
             <!--  util start -->
             <dependency>
@@ -68,9 +95,6 @@
             </dependency>
             <!--  util end -->
         </dependencies>
-
-
-
     </dependencyManagement>
 
 </project>

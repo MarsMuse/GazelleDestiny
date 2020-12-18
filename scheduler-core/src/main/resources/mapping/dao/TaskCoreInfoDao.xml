@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.artisan.scheduler.dao.TaskCoreInfoDao">
+
+    <!-- @formatter:off -->
+    <sql id="BasicColumns">
+		${alias}.id,
+		${alias}.task_id,
+		${alias}.service_name,
+		${alias}.priority,
+		${alias}.task_type,
+		${alias}.task_status,
+		${alias}.plan_time,
+		${alias}.parameter,
+		${alias}.server_create_time,
+		${alias}.server_update_time
+    </sql>
+
+    <sql id="columns">
+		id,
+		task_id,
+		service_name,
+		priority,
+		task_type,
+		task_status,
+		plan_time,
+		parameter,
+		server_create_time,
+		server_update_time
+    </sql>
+    <!-- @formatter:on -->
+
+
+
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.artisan.scheduler.entity.TaskCoreInfoEntity">
+        INSERT INTO task_core_info
+        (task_id, service_name, priority, task_type, task_status, 
+		 plan_time, parameter)
+        VALUES (#{taskId}, #{serviceName}, #{priority}, #{taskType}, #{taskStatus}, 
+				#{planTime}, #{parameter})
+    </insert>
+
+    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="id" parameterType="com.artisan.scheduler.entity.TaskCoreInfoEntity">
+        INSERT INTO task_core_info
+        (task_id, service_name, priority, task_type, task_status, 
+		 plan_time, parameter)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.taskId}, #{item.serviceName}, #{item.priority}, #{item.taskType}, #{item.taskStatus}, 
+			#{item.planTime}, #{item.parameter})
+        </foreach>
+    </insert>
+
+    <update id="updateById" parameterType="com.artisan.scheduler.entity.TaskCoreInfoEntity">
+        UPDATE task_core_info SET 
+        task_id = #{taskId},
+        service_name = #{serviceName},
+        priority = #{priority},
+        task_type = #{taskType},
+        task_status = #{taskStatus},
+        plan_time = #{planTime},
+        parameter = #{parameter}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateByIdSelective" parameterType="com.artisan.scheduler.entity.TaskCoreInfoEntity">
+        UPDATE task_core_info
+        <set>
+            <if test="taskId != null">
+                task_id = #{taskId},
+            </if>
+            <if test="serviceName != null">
+                service_name = #{serviceName},
+            </if>
+            <if test="priority != null">
+                priority = #{priority},
+            </if>
+            <if test="taskType != null">
+                task_type = #{taskType},
+            </if>
+            <if test="taskStatus != null">
+                task_status = #{taskStatus},
+            </if>
+            <if test="planTime != null">
+                plan_time = #{planTime},
+            </if>
+            <if test="parameter != null">
+                parameter = #{parameter},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE
+        FROM task_core_info
+        WHERE id = #{id}
+    </delete>
+
+    <select id="lockById" resultType="com.artisan.scheduler.entity.TaskCoreInfoEntity">
+        SELECT
+        <include refid="BasicColumns">
+            <property name="alias" value="t"/>
+        </include>
+        FROM task_core_info t
+        WHERE id = #{id}
+        FOR UPDATE
+    </select>
+
+    <select id="findById" resultType="com.artisan.scheduler.entity.TaskCoreInfoEntity">
+        SELECT
+        <include refid="BasicColumns">
+            <property name="alias" value="t"/>
+        </include>
+        FROM task_core_info t
+        WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultType="com.artisan.scheduler.entity.TaskCoreInfoEntity">
+        SELECT
+        <include refid="BasicColumns">
+            <property name="alias" value="t"/>
+        </include>
+        FROM task_core_info t
+        <where>
+            <if test="id != null">
+                AND t.id = #{id}
+            </if>
+            <if test="taskId != null">
+                AND t.task_id = #{taskId}
+            </if>
+            <if test="serviceName != null">
+                AND t.service_name = #{serviceName}
+            </if>
+            <if test="priority != null">
+                AND t.priority = #{priority}
+            </if>
+            <if test="taskType != null">
+                AND t.task_type = #{taskType}
+            </if>
+            <if test="taskStatus != null">
+                AND t.task_status = #{taskStatus}
+            </if>
+            <if test="planTime != null">
+                AND t.plan_time = #{planTime}
+            </if>
+            <if test="parameter != null">
+                AND t.parameter = #{parameter}
+            </if>
+            <if test="serverCreateTime != null">
+                AND t.server_create_time = #{serverCreateTime}
+            </if>
+            <if test="serverUpdateTime != null">
+                AND t.server_update_time = #{serverUpdateTime}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+
