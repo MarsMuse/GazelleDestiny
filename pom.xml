@@ -13,6 +13,7 @@
         <module>leet-code</module>
         <module>scheduler-core</module>
         <module>common-core</module>
+        <module>chaos</module>
     </modules>
 
     <properties>

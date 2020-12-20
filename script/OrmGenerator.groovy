@@ -139,10 +139,6 @@ def getIdType(fields) {
     return fields.find { it.name == 'id' }.type
 }
 
-def notEmpty(content) {
-    content != null && content.toString().trim().length() > 0
-}
-
 /** 生成 数据库表映射的entity 文件 **/
 def generateEntity(table, dir, fields, className, packageName, refresh) {
     def entityFile = new File(entityDir(dir), entityClassName(className) + ".java")
