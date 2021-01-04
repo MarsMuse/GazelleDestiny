@@ -63,11 +63,11 @@ public class ArrayUtils {
         Random r1 = new Random();
         int[] data = new int[length];
         for (int i = 0; i < length; i++) {
-            if (i % fixedIndex == 0) {
+            if (i != 0 && i % fixedIndex == 0) {
                 data[i] = fixedValue;
                 continue;
             }
-            data[i] = r1.nextInt(10);
+            data[i] = r1.nextInt(Math.max(length, 100));
         }
         return data;
     }
@@ -79,7 +79,7 @@ public class ArrayUtils {
         //确保不会出现重复查找，越界
         while (start <= end) {
             //计算出中间索引值
-            int middle = (end + start)>>>1 ;//防止溢出
+            int middle = (end + start) >>> 1;//防止溢出
             if (des == srcArray[middle]) {
                 return middle;
                 //判断下限
@@ -101,8 +101,8 @@ public class ArrayUtils {
         b.add(1L);
         b.add(2L);
         System.out.println(b.retainAll(a));
-        char m = 'b' -32;
-        System.out.println(m+1);
-        System.out.println('0'+1);
+        char m = 'b' - 32;
+        System.out.println(m + 1);
+        System.out.println('0' + 1);
     }
 }
