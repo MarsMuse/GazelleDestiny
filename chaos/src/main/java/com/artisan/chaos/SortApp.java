@@ -1,6 +1,7 @@
 package com.artisan.chaos;
 
 import com.artisan.chaos.model.TestSortInfo;
+import com.artisan.leetcode.util.ArrayUtils;
 
 
 import java.util.ArrayList;
@@ -9,7 +10,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import static com.artisan.leetcode.util.ArrayUtils.*;
 
 /**
  * 排序测试
@@ -21,10 +21,10 @@ public class SortApp {
 
     public static void main(String[] args) {
         //sortUser();
-        int[] data = getExistFixedValueArray(1000, 10001, 20);
-        printArray(data);
+        int[] data = ArrayUtils.getExistFixedValueArray(1000, 10001, 20);
+        ArrayUtils.printArray(data);
         insertSOrt(data);
-        printArray(data);
+        ArrayUtils.printArray(data);
 
     }
 
