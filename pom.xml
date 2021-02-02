@@ -15,6 +15,7 @@
         <module>common-core</module>
         <module>chaos</module>
         <module>artisan-agent</module>
+        <module>core-context</module>
     </modules>
 
     <properties>
