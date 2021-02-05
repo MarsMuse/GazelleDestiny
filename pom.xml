@@ -16,6 +16,7 @@
         <module>chaos</module>
         <module>artisan-agent</module>
         <module>core-context</module>
+        <module>hornet-maven-plugin</module>
     </modules>
 
     <properties>
