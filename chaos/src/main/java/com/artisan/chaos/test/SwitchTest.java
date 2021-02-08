@@ -9,6 +9,8 @@ public class SwitchTest {
 
 
     public static void main(String[] args) {
+        System.out.println(SwitchTest.class.getName());
+        System.out.println(SwitchTest.class.getResource("hornet").getPath());
         Action[] actionArray = Action.values();
         for (Action action : actionArray) {
             switch (action) {
