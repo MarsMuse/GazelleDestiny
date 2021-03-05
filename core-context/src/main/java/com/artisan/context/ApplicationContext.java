@@ -12,10 +12,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class ApplicationContext {
 
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext();
-        ac.scan("com.artisan");
-        ac.refresh();
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext("com.artisan");
         SecurityService ss = ac.getBean(SecurityService.class);
         ss.accessLog();
+        System.out.println(ss);
+        System.out.println(ac.getBean(SecurityService.class));
     }
 }
