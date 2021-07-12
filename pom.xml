@@ -17,6 +17,8 @@
         <module>artisan-agent</module>
         <module>core-context</module>
         <module>hornet-maven-plugin</module>
+        <module>aviator</module>
+        <module>dynamic-script</module>
     </modules>
 
     <properties>

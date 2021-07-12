@@ -66,19 +66,22 @@ import java.util.List;
 public class BinaryTreeInorderTraversal {
     public static void main(String[] args) {
         Solution solution = new BinaryTreeInorderTraversal().new Solution();
-        System.out.println(solution.inorderTraversal(mockNode()));
+        TreeNode node = mockNode();
+        System.out.println(solution.inorderTraversal(node));
+        System.out.println(solution.stackTraversal(node));
+        System.out.println(solution.iteratorTraversal(node));
     }
 
 
-    static TreeNode mockNode(){
-        TreeNode root = new TreeNode(2,null,null);
-        TreeNode l1 =  new TreeNode(3,null,null);
+    static TreeNode mockNode() {
+        TreeNode root = new TreeNode(2, null, null);
+        TreeNode l1 = new TreeNode(3, null, null);
         root.left = l1;
-        TreeNode lr2 =  new TreeNode(5,null,null);
+        TreeNode lr2 = new TreeNode(5, null, null);
         l1.right = lr2;
-        TreeNode r1 =  new TreeNode(4,null,null);
+        TreeNode r1 = new TreeNode(4, null, null);
         root.right = r1;
-        TreeNode rl2 =  new TreeNode(6,null,null);
+        TreeNode rl2 = new TreeNode(6, null, null);
         r1.left = rl2;
         return root;
     }
@@ -120,6 +123,100 @@ public class BinaryTreeInorderTraversal {
             inorderLogic(root.left, nodeList);
             nodeList.add(root.val);
             inorderLogic(root.right, nodeList);
+        }
+
+        public List<Integer> stackTraversal(TreeNode root) {
+            if (null == root) {
+                return new ArrayList<>();
+            }
+            List<Integer> nodeList = new ArrayList<>(128);
+            SimpleStack<TreeStackNode> ss = new SimpleStack<>();
+            ss.push(new TreeStackNode(root));
+            while (!ss.isEmpty()) {
+                TreeStackNode ts = ss.pop();
+                if (!ts.tree) {
+                    nodeList.add(ts.node.val);
+                    continue;
+                }
+                TreeNode node = ts.node;
+                if (null != node.right) {
+                    ss.push(new TreeStackNode(node.right));
+                }
+                ss.push(new TreeStackNode(node, false));
+                if (null != node.left) {
+                    ss.push(new TreeStackNode(node.left));
+                }
+            }
+            return nodeList;
+        }
+
+        class TreeStackNode {
+            TreeNode node;
+            boolean tree;
+
+            public TreeStackNode(TreeNode node, boolean tree) {
+                this.node = node;
+                this.tree = tree;
+            }
+
+            public TreeStackNode(TreeNode node) {
+                this.node = node;
+                this.tree = true;
+            }
+        }
+
+        public List<Integer> iteratorTraversal(TreeNode root){
+            if(null == root){
+                return new ArrayList<>();
+            }
+            List<Integer> result = new ArrayList<>(128);
+            SimpleStack<TreeNode> ss = new SimpleStack<>();
+            while (null != root || !ss.isEmpty()){
+                while (null != root){
+                    ss.push(root);
+                    root = root.left;
+                }
+                root = ss.pop();
+                result.add(root.val);
+                root = root.right;
+            }
+            return result;
+        }
+
+
+        class SimpleStack<T> {
+            Node<T> head;
+
+            public SimpleStack() {
+            }
+
+            public void push(T value) {
+                head = new Node<>(value, head);
+            }
+
+            public T pop() {
+                if (null == head) {
+                    return null;
+                } else {
+                    T value = head.value;
+                    head = head.next;
+                    return value;
+                }
+            }
+
+            public boolean isEmpty() {
+                return null == head;
+            }
+
+            class Node<T> {
+                T value;
+                Node<T> next;
+
+                public Node(T value, Node<T> next) {
+                    this.value = value;
+                    this.next = next;
+                }
+            }
         }
     }
 
